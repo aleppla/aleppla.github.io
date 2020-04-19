@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Andrew Leppla" />
+
+
+<title>DDS Project2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">About Me</a>
+</li>
+<li>
+  <a href="CLT_2.html">CLT</a>
+</li>
+<li>
+  <a href="DDS_Project1.html">Beer Study</a>
+</li>
+<li>
+  <a href="DDS_Project1.html">Case Study 2</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">DDS Project2</h1>
+<h4 class="author">Andrew Leppla</h4>
+<h4 class="date">4/18/2020</h4>
+
+</div>
+
+
+<div id="executive-summary" class="section level2">
+<h2>Executive Summary</h2>
+<p>DDS Analytics conducted an analysis of existing employee data to predict voluntary employee turnover (Attrition). The top 3 factors that predict Attrition are Overtime, Job Role, and Monthly Income. Employees that don’t work Overtime are less likely to quit. For Job Roles, Directors are least likely to quit, then Managers and HeathCare Reps, followed by HR, Lab Techs, R&amp;D Scientists, and Sales Execs. Sales Reps are the most likely to quit. The Job Roles with lower attrition are associated with higher monthly incomes and vice versa. There is likely a trade-off between the cost of retaining an employee with a raise or promotion vs. the cost to recruit, hire, and retain a new employee.</p>
+<p>The Attrition model correctly predicts if an employee will leave or stay about 70-75% of the time.</p>
+<p>DDS Analytics also conducted an analysis to predict salary (Monthly Income). Job Level was the single biggest factor which explained 97% of the variation in the data and predicted salary with an average error of $1,260/month.</p>
+<div id="presentation" class="section level3">
+<h3>Presentation</h3>
+<p>A presentation of this analysis can be found at: <a href="https://youtu.be/WmFpZSvjUp4" class="uri">https://youtu.be/WmFpZSvjUp4</a></p>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>DDS Analytics was asked to conduct an analysis of existing employee data to determine the factors that contribute to voluntary employee turnover (Attrition) and Monthly Income. The data set includes 33 variables on 870 employees. Exploratory data analysis was done to screen for various factors, and predictive models were built using Naive Bayes and Linear Regression.</p>
+</div>
+<div id="exploratory-data-analysis-eda" class="section level2">
+<h2>Exploratory Data Analysis (EDA)</h2>
+<p>Several variables had the same value for all employees (no variation) and were dropped from the data set: Employee Count (all=1), Over18 (all=1), and Standard Hours (all=80).</p>
+<p>Categorical variables were explored for both Naive Bayes, Random Forest, and Regression models.</p>
+<p>Continuous variables were explored for k Nearest Neighbors (kNN), Linear Discriminant Analysis (LDA), Random Forest, and Regression models.</p>
+</div>
+<div id="eda---attrition" class="section level2">
+<h2>EDA - Attrition</h2>
+<p>Many variables with numeric values are actually categorical with only 2-5 discrete levels. These were recoded as factors for modeling. From the colored bar chart grid, factors with light blue Yes’s appear to be significant: Overtime, Job Role, and Monthly Income. Factors with yellow Yes’s may have an effect, and factors with orange Yes’s appear to be insignificant.</p>
+<p>Individual bar charts of the biggest visual effects show pretty clear signals for Attrition: OverTime is related to higher Attrition, Directors (Dir) have the lowest Attrition while Sales Reps have the highest and Lower Monthly Incomes are associated with higher attrition.</p>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Attrition-1.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Attrition-2.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Attrition-3.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Attrition-4.png" width="672" /></p>
+</div>
+<div id="knn-prediction-of-attrition" class="section level2">
+<h2>kNN Prediction of Attrition</h2>
+<p>K Nearest Neighbors (kNN) was unsuccessful at reliably predicting Attrition with continuous variables. kNN predictive models were not able to consistently achieve 60% sensitivity and 60% specificity in both the training and test sets. Monthly Income and Daily Rate were the top factors.</p>
+</div>
+<div id="naive-bayes-prediction-of-attrition" class="section level2">
+<h2>Naive Bayes Prediction of Attrition</h2>
+<p>Using categorical variables, a Naive Bayes model was able to predict Attrition with 70-75% Sensitivity (correct No’s) and 70-75% Specificity (correct Yes’s) for the training set, test set, and refitted to the full data set (in that order below). This was achieved by changing the prediction threshold from 0.50-0.50 to 0.83-0.17 to balance the prediction accuracy of both No’s and Yes’s for Attrition. The prediction threshold can be further optimized if desired.</p>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  386  25
+##        Yes 120  78
+##                                          
+##                Accuracy : 0.7619         
+##                  95% CI : (0.726, 0.7952)
+##     No Information Rate : 0.8309         
+##     P-Value [Acc &gt; NIR] : 1              
+##                                          
+##                   Kappa : 0.3804         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 5.89e-15       
+##                                          
+##             Sensitivity : 0.7628         
+##             Specificity : 0.7573         
+##          Pos Pred Value : 0.9392         
+##          Neg Pred Value : 0.3939         
+##              Prevalence : 0.8309         
+##          Detection Rate : 0.6338         
+##    Detection Prevalence : 0.6749         
+##       Balanced Accuracy : 0.7601         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  171  11
+##        Yes  53  26
+##                                          
+##                Accuracy : 0.7548         
+##                  95% CI : (0.698, 0.8057)
+##     No Information Rate : 0.8582         
+##     P-Value [Acc &gt; NIR] : 1              
+##                                          
+##                   Kappa : 0.3163         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 2.975e-07      
+##                                          
+##             Sensitivity : 0.7634         
+##             Specificity : 0.7027         
+##          Pos Pred Value : 0.9396         
+##          Neg Pred Value : 0.3291         
+##              Prevalence : 0.8582         
+##          Detection Rate : 0.6552         
+##    Detection Prevalence : 0.6973         
+##       Balanced Accuracy : 0.7330         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  554  31
+##        Yes 176 109
+##                                         
+##                Accuracy : 0.7621        
+##                  95% CI : (0.7323, 0.79)
+##     No Information Rate : 0.8391        
+##     P-Value [Acc &gt; NIR] : 1             
+##                                         
+##                   Kappa : 0.3789        
+##                                         
+##  Mcnemar&#39;s Test P-Value : &lt;2e-16        
+##                                         
+##             Sensitivity : 0.7589        
+##             Specificity : 0.7786        
+##          Pos Pred Value : 0.9470        
+##          Neg Pred Value : 0.3825        
+##              Prevalence : 0.8391        
+##          Detection Rate : 0.6368        
+##    Detection Prevalence : 0.6724        
+##       Balanced Accuracy : 0.7687        
+##                                         
+##        &#39;Positive&#39; Class : No            
+## </code></pre>
+<p>The Naive Bayes model is relatively robust and replicable with many different random training/test splits. Refer to the Rmd code for more information.</p>
+</div>
+<div id="data-exploration---monthly-income" class="section level2">
+<h2>Data Exploration - Monthly Income</h2>
+<p>Monthly Income and JobLevel appear strongly correlated in the paired scatterplots. Per the correlation matrix, JobLevel has the highest correlation with Monthly Income by far with r=0.95. Job Level is partially correlated with several other continuous predictors (multicollinearity).</p>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Continuous/Factor%20Variables-1.png" width="672" /></p>
+<pre><code>##                         MonthlyIncome     JobLevel
+## MonthlyIncome             1.000000000  0.951640049
+## JobLevel                  0.951640049  1.000000000
+## TotalWorkingYears         0.778511205  0.780752353
+## Age                       0.484288301  0.479423564
+## YearsAtCompany            0.491378966  0.520583507
+## YearsInCurrentRole        0.361840521  0.391304819
+## YearsSinceLastPromotion   0.315911576  0.330435705
+## YearsWithCurrManager      0.328487453  0.366567472
+## DistanceFromHome         -0.006667155  0.021727054
+## HourlyRate                0.002391151 -0.008070074</code></pre>
+<p>Per the box plot grid, Job Role is strongly related to Monthly Income. However, it’s highly correlated/confounded with Job Level which can be seen in the scatterplot color bands.</p>
+<p>Job Level is related to Job Role as follows:</p>
+<p>Levels 1-2 = Sales Representative Levels 1-3 = Laboratory Technician Levels 1-3 = Research Scientist, Human Resources Levels 2-4 = Manufacturing Director, Healthcare Representative, Sales Executive Levels 3-5 = Manager and Research Director</p>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Salary-1.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/EDA%20Categorical%20Salary-2.png" width="672" /></p>
+</div>
+<div id="regression-analysis-of-monthly-salary" class="section level2">
+<h2>Regression Analysis of Monthly Salary</h2>
+<p>Regression was used to predict Monthly Salary. Job Level alone predicted Monthly Salary very well with an average error (RMSE) of approximately $1,260 and an R-squared value of 97%. Mean Monthly Salary increases (non-linearly) as Job Level increases from 1 to 4. This is a simple, effective, practical model.</p>
+<p>Monthly Income is nonlinear vs. Job Level. This curvature can be dealt with in one of two ways:</p>
+<p>1.Use JobLevel as a categorical factor with discrete levels of 1, 2, 3, and 4</p>
+<p>2.Use JobLevel as a polynomial: Job + Job^2 + Job^3</p>
+<div id="joblevel-as-a-categorical-factor" class="section level3">
+<h3>JobLevel as a Categorical Factor</h3>
+<p>Job Level as a factor appears to be a good fit with all factor levels statistically significant and an R-squared value of 92.5%.</p>
+<p>Check Residuals for Model Assumptions:</p>
+<p>Non-constant variance in the residuals may be a problem for any t-tests and confidence/prediction intervals.<br />
+Residuals are non-normal, but n&gt;30 so the analysis is robust per the Central Limit Theorem.</p>
+<p>No high influence points to worry about (low Cook’s D).</p>
+<p>The assumption of non-constant variance may be violated, and the Brown-Forsythe test confirms this is the case. That said, this test can detect very small differences in variance with such a large sample size (n=256).</p>
+<p>Additional tests were done to confirm statistical significance without the assumption of constant variance: Welch’s ANOVA test and Kruskal-Wallace rank sum test. Both confirm statistical significance of the overall model but don’t give detailed information in R.</p>
+<pre><code>## 
+## Call:
+## lm(formula = MonthlyIncome ~ JobLvl, data = train_CS2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4708.6  -659.5  -114.5   651.5  4446.5 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2720.77      84.62   32.15   &lt;2e-16 ***
+## JobLvl2      2789.75     120.90   23.08   &lt;2e-16 ***
+## JobLvl3      7197.79     157.21   45.78   &lt;2e-16 ***
+## JobLvl4     12703.80     214.56   59.21   &lt;2e-16 ***
+## JobLvl5     16457.67     260.06   63.28   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1278 on 604 degrees of freedom
+## Multiple R-squared:  0.9254, Adjusted R-squared:  0.9249 
+## F-statistic:  1874 on 4 and 604 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Salary%20Linear%20Regression%20CV-1.png" width="672" /></p>
+<pre><code>## 
+##   Brown-Forsythe Test (alpha = 0.05) 
+## ------------------------------------------------------------- 
+##   data : MonthlyIncome and JobLvl 
+## 
+##   statistic  : 2177.982 
+##   num df     : 4 
+##   denom df   : 256.2621 
+##   p.value    : 1.826326e-196 
+## 
+##   Result     : Difference is statistically significant. 
+## -------------------------------------------------------------</code></pre>
+<pre><code>## 
+##  One-way analysis of means (not assuming equal variances)
+## 
+## data:  MonthlyIncome and JobLvl
+## F = 7344.5, num df = 4.00, denom df = 169.66, p-value &lt; 2.2e-16</code></pre>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  MonthlyIncome by JobLvl
+## Kruskal-Wallis chi-squared = 744.02, df = 4, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="weighted-least-squares-with-joblevel-as-cat.-factor" class="section level3">
+<h3>Weighted Least Squares with JobLevel as Cat. Factor</h3>
+<p>Weighted Least Squares was used to correct for non-constant variance. With this method, the higher variance is weighted less and lower variance is weighted more for a more balanced pooled error estimate.</p>
+<pre><code>## 
+## Call:
+## lm(formula = MonthlyIncome ~ JobLvl, data = train_CS2, weights = weight)
+## 
+## Weighted Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.6230 -0.6943 -0.1150  0.5774  3.3626 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2720.77      49.02   55.51   &lt;2e-16 ***
+## JobLvl2      2789.75     102.39   27.25   &lt;2e-16 ***
+## JobLvl3      7197.79     199.88   36.01   &lt;2e-16 ***
+## JobLvl4     12703.80     288.50   44.03   &lt;2e-16 ***
+## JobLvl5     16457.67     117.75  139.77   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.006 on 604 degrees of freedom
+## Multiple R-squared:  0.9722, Adjusted R-squared:  0.9721 
+## F-statistic:  5290 on 4 and 604 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Weighted%20Least%20Squares-1.png" width="672" /></p>
+<p>Weighted Least Squares was also tried with Job Level as a continuous variable with quadratic and cubic terms added.</p>
+</div>
+</div>
+<div id="rmse-comparison" class="section level2">
+<h2>RMSE Comparison</h2>
+<p>Root Mean Square Error (RMSE) was used to compare the Weighted Least Squares models. Job Level as a categorical factor was the best model with the lowest RMSE for both the training and test sets.</p>
+<pre><code>##   JobLevel_Model Train_RMSE Test_RMSE
+## 1      Quadratic   1338.633  1244.410
+## 2          Cubic   1276.705  1237.903
+## 3         Factor   1272.503  1236.311</code></pre>
+</div>
+<div id="fit-final-model-to-full-data-set" class="section level2">
+<h2>Fit Final Model to Full Data Set</h2>
+<p>Finally, the model was refit to the entire data set:</p>
+<p>R-squared = 97.2% RMSE = $1,260/mo</p>
+<p>In the final weighted model plots, prediction intervals (blue lines) show a big improvement in the error estimates and 95% prediction intervals for Job Level = 5.</p>
+<pre><code>## 
+## Call:
+## lm(formula = MonthlyIncome ~ JobLvl, data = CaseStudy2, weights = weight)
+## 
+## Weighted Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.6486 -0.6853 -0.1083  0.5919  3.3371 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2743.82      40.56   67.65   &lt;2e-16 ***
+## JobLvl2      2800.46      85.14   32.89   &lt;2e-16 ***
+## JobLvl3      7108.38     166.68   42.65   &lt;2e-16 ***
+## JobLvl4     12509.83     239.87   52.15   &lt;2e-16 ***
+## JobLvl5     16480.15      99.54  165.57   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1 on 865 degrees of freedom
+## Multiple R-squared:  0.9717, Adjusted R-squared:  0.9716 
+## F-statistic:  7431 on 4 and 865 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Final%20Reg%20Model-1.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Final%20Reg%20Model-2.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Final%20Reg%20Model-3.png" width="672" /><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Final%20Reg%20Model-4.png" width="672" /></p>
+</div>
+<div id="linear-discriminant-analysis-lda---attrition" class="section level2">
+<h2>Linear Discriminant Analysis (LDA) - Attrition</h2>
+<p>An LDA model was also tested to model Attrition. Monthly Income alone was a reasonably good predictor with 60% Sensitivity and Specificity.</p>
+<p>A more complex LDA model with most of the numeric predictors improved to 70% Sensitivity and Specificity. This model could likely be improved/reduced by removing insignificant terms.</p>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##      
+##        No Yes
+##   No  440  53
+##   Yes 290  87
+##                                           
+##                Accuracy : 0.6057          
+##                  95% CI : (0.5724, 0.6384)
+##     No Information Rate : 0.8391          
+##     P-Value [Acc &gt; NIR] : 1               
+##                                           
+##                   Kappa : 0.1331          
+##                                           
+##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
+##                                           
+##             Sensitivity : 0.6027          
+##             Specificity : 0.6214          
+##          Pos Pred Value : 0.8925          
+##          Neg Pred Value : 0.2308          
+##              Prevalence : 0.8391          
+##          Detection Rate : 0.5057          
+##    Detection Prevalence : 0.5667          
+##       Balanced Accuracy : 0.6121          
+##                                           
+##        &#39;Positive&#39; Class : No              
+## </code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  519  35
+##        Yes 211 105
+##                                         
+##                Accuracy : 0.7172        
+##                  95% CI : (0.686, 0.747)
+##     No Information Rate : 0.8391        
+##     P-Value [Acc &gt; NIR] : 1             
+##                                         
+##                   Kappa : 0.3057        
+##                                         
+##  Mcnemar&#39;s Test P-Value : &lt;2e-16        
+##                                         
+##             Sensitivity : 0.7110        
+##             Specificity : 0.7500        
+##          Pos Pred Value : 0.9368        
+##          Neg Pred Value : 0.3323        
+##              Prevalence : 0.8391        
+##          Detection Rate : 0.5966        
+##    Detection Prevalence : 0.6368        
+##       Balanced Accuracy : 0.7305        
+##                                         
+##        &#39;Positive&#39; Class : No            
+## </code></pre>
+</div>
+<div id="random-forest---attrition" class="section level2">
+<h2>Random Forest - Attrition</h2>
+<p>Finally, Random Forest was also used to predict Attrition. Using all of the variables in this “black box” model, the prediction really isn’t much better than Naives Bayes and is harder to interpret. The Variable Importance plots agree with Naive Bayes that OverTime and Job Role are top factors. Monthly Income is also an important factor which is consistent with kNN and LDA.</p>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  169   8
+##        Yes  55  29
+##                                          
+##                Accuracy : 0.7586         
+##                  95% CI : (0.702, 0.8092)
+##     No Information Rate : 0.8582         
+##     P-Value [Acc &gt; NIR] : 1              
+##                                          
+##                   Kappa : 0.3517         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 6.814e-09      
+##                                          
+##             Sensitivity : 0.7545         
+##             Specificity : 0.7838         
+##          Pos Pred Value : 0.9548         
+##          Neg Pred Value : 0.3452         
+##              Prevalence : 0.8582         
+##          Detection Rate : 0.6475         
+##    Detection Prevalence : 0.6782         
+##       Balanced Accuracy : 0.7691         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+<p><img src="Leppla_Andrew_CaseStudy2_files/figure-html/Random%20Forest-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
