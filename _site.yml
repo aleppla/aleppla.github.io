@@ -1,0 +1,12 @@
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "About Me"
+    href: index.html
+    - text: "CLT"
+    href: CLT_2.html
+    - text: "Beer Study"
+    href: DDS_Project1.html
+    - text: "Case Study 2"
+    href: Leppla_Andrew_CaseStudy2.html
